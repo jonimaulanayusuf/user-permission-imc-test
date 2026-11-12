@@ -17,7 +17,7 @@ Stack: Angular 20, Angular Material, Slim 4, PHP, PostgreSQL.
 ## Struktur project
 
 ```
-IMC_Test_CRUD/
+(workspace)/
 ├─ api/                     REST API Slim 4
 │  ├─ public/index.php      entry point
 │  ├─ src/                  Controller, Service, Middleware, Support
