@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>{{ data ? 'Edit Level' : 'Tambah Level' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Nama Level</mat-label>
+      <input matInput formControlName="name" maxlength="50" placeholder="Contoh: Manager" />
+      @if (form.controls.name.hasError('required')) {
+        <mat-error>Nama level wajib diisi.</mat-error>
+      }
+      @if (form.controls.name.hasError('maxlength')) {
+        <mat-error>Maksimal 50 karakter.</mat-error>
+      }
+      @if (form.controls.name.hasError('server')) {
+        <mat-error>{{ form.controls.name.getError('server') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Deskripsi</mat-label>
+      <textarea matInput formControlName="description" rows="3" maxlength="255"></textarea>
+      @if (form.controls.description.hasError('maxlength')) {
+        <mat-error>Maksimal 255 karakter.</mat-error>
+      }
+      @if (form.controls.description.hasError('server')) {
+        <mat-error>{{ form.controls.description.getError('server') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-slide-toggle formControlName="is_active">Level aktif</mat-slide-toggle>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="dialogRef.close(false)">Batal</button>
+  <button mat-flat-button color="primary" type="button" [disabled]="saving()" (click)="save()">
+    @if (saving()) {
+      <mat-spinner diameter="18" />
+    } @else {
+      Simpan
+    }
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,96 @@
+.app-shell {
+  height: 100vh;
+}
+
+.app-sidenav {
+  width: 270px;
+  display: flex;
+  flex-direction: column;
+  background: var(--mat-sys-surface, #ffffff);
+  border-right: 1px solid var(--mat-sys-outline-variant, #e0e0e0);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 18px;
+}
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--mat-sys-primary, #6750a4);
+  color: var(--mat-sys-on-primary, #ffffff);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+}
+
+.brand strong {
+  display: block;
+  line-height: 1.2;
+}
+
+.brand small {
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.nav-area {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 8px;
+}
+
+.sidenav-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 16px 18px;
+  border-top: 1px solid var(--mat-sys-outline-variant, #e0e0e0);
+  font-size: 0.82rem;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.sidenav-footer strong {
+  color: var(--mat-sys-on-surface, #1b1b1f);
+  font-size: 0.9rem;
+}
+
+.app-content-wrap {
+  background: var(--mat-sys-surface-container-low, #f6f7fb);
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--mat-sys-surface, #ffffff);
+  border-bottom: 1px solid var(--mat-sys-outline-variant, #e0e0e0);
+}
+
+.toolbar-title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.user-chip {
+  margin-right: 8px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--mat-sys-surface-container-high, #ece6f0);
+  font-size: 0.8rem;
+}
+
+.app-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}

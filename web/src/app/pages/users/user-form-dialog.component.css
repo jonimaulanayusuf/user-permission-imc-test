@@ -1,0 +1,11 @@
+mat-dialog-content {
+  min-width: min(560px, 80vw);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-slide-toggle {
+  margin-top: 4px;
+}

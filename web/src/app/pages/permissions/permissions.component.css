@@ -1,0 +1,138 @@
+.permission-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.tab-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.tab-header h2 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.tab-header p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.user-header {
+  align-items: flex-end;
+}
+
+.user-select {
+  width: min(320px, 100%);
+}
+
+.user-summary {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--mat-sys-surface-container-high, #ece6f0);
+  font-size: 0.88rem;
+}
+
+.matrix-wrap {
+  overflow: auto;
+  border: 1px solid var(--mat-sys-outline-variant, #e0e0e0);
+  border-radius: 12px;
+}
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.matrix th,
+.matrix td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--mat-sys-outline-variant, #eeeeee);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.matrix thead th {
+  background: var(--mat-sys-surface-container, #f3edf7);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.matrix thead small {
+  display: block;
+  margin-top: 2px;
+  font-weight: 400;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.matrix tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.matrix tbody tr:hover {
+  background: var(--mat-sys-surface-container-low, #faf7fe);
+}
+
+.page-col {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 240px;
+  background: var(--mat-sys-surface, #ffffff);
+}
+
+.matrix thead .page-col {
+  background: var(--mat-sys-surface-container, #f3edf7);
+}
+
+.page-name {
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.center {
+  text-align: center !important;
+}
+
+.override-col {
+  min-width: 170px;
+}
+
+.override-select {
+  width: 150px;
+}
+
+mat-icon.yes {
+  color: #1e7e34;
+}
+
+mat-icon.no {
+  color: #b3261e;
+}
+
+.tab-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  font-size: 0.84rem;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}

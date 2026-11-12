@@ -1,0 +1,104 @@
+<h2 mat-dialog-title>{{ data ? 'Edit User' : 'Tambah User' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Nama Lengkap</mat-label>
+      <input matInput formControlName="full_name" maxlength="100" />
+      @if (form.controls.full_name.hasError('required')) {
+        <mat-error>Nama lengkap wajib diisi.</mat-error>
+      }
+      @if (form.controls.full_name.hasError('maxlength')) {
+        <mat-error>Maksimal 100 karakter.</mat-error>
+      }
+      @if (form.controls.full_name.hasError('server')) {
+        <mat-error>{{ form.controls.full_name.getError('server') }}</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" maxlength="50" autocomplete="off" />
+        @if (form.controls.username.hasError('required')) {
+          <mat-error>Username wajib diisi.</mat-error>
+        }
+        @if (form.controls.username.hasError('minlength')) {
+          <mat-error>Minimal 3 karakter.</mat-error>
+        }
+        @if (form.controls.username.hasError('pattern')) {
+          <mat-error>Hanya huruf, angka, titik, garis bawah, dan tanda hubung.</mat-error>
+        }
+        @if (form.controls.username.hasError('server')) {
+          <mat-error>{{ form.controls.username.getError('server') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" maxlength="150" autocomplete="off" />
+        @if (form.controls.email.hasError('required')) {
+          <mat-error>Email wajib diisi.</mat-error>
+        }
+        @if (form.controls.email.hasError('email')) {
+          <mat-error>Format email tidak valid.</mat-error>
+        }
+        @if (form.controls.email.hasError('server')) {
+          <mat-error>{{ form.controls.email.getError('server') }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ data ? 'Password Baru (opsional)' : 'Password' }}</mat-label>
+        <input matInput type="password" formControlName="password" autocomplete="new-password" />
+        @if (form.controls.password.hasError('required')) {
+          <mat-error>Password wajib diisi.</mat-error>
+        }
+        @if (form.controls.password.hasError('minlength')) {
+          <mat-error>Minimal 8 karakter.</mat-error>
+        }
+        @if (form.controls.password.hasError('server')) {
+          <mat-error>{{ form.controls.password.getError('server') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Level</mat-label>
+        <mat-select formControlName="level_id" placeholder="Pilih level">
+          @if (loadingLevels()) {
+            <mat-option disabled>Memuat level...</mat-option>
+          }
+          @for (level of levels(); track level.id) {
+            <mat-option
+              [value]="level.id"
+              [disabled]="!level.is_active && level.id !== data?.level?.id"
+            >
+              {{ level.name }}{{ level.is_active ? '' : ' (nonaktif)' }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (form.controls.level_id.hasError('required')) {
+          <mat-error>Level wajib dipilih.</mat-error>
+        }
+        @if (form.controls.level_id.hasError('server')) {
+          <mat-error>{{ form.controls.level_id.getError('server') }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-slide-toggle formControlName="is_active">Akun aktif</mat-slide-toggle>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="dialogRef.close(false)">Batal</button>
+  <button mat-flat-button color="primary" type="button" [disabled]="saving()" (click)="save()">
+    @if (saving()) {
+      <mat-spinner diameter="18" />
+    } @else {
+      Simpan
+    }
+  </button>
+</mat-dialog-actions>

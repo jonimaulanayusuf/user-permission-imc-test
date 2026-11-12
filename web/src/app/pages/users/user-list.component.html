@@ -1,0 +1,90 @@
+<div class="page-header">
+  <div>
+    <h1>Manajemen User</h1>
+    <p>Kelola akun pengguna beserta level aksesnya.</p>
+  </div>
+  <button mat-flat-button color="primary" type="button" (click)="openCreate()">
+    <mat-icon>add</mat-icon>
+    Tambah User
+  </button>
+</div>
+
+<div class="toolbar-row">
+  <mat-form-field appearance="outline" class="search-field" subscriptSizing="dynamic">
+    <mat-label>Cari user</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input
+      matInput
+      #searchInput
+      placeholder="Nama, username, email, atau level"
+      (input)="search.set(searchInput.value)"
+    />
+  </mat-form-field>
+</div>
+
+<mat-card appearance="outlined">
+  <div class="table-wrap">
+    <table mat-table [dataSource]="filteredUsers()" class="data-table">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nama</th>
+        <td mat-cell *matCellDef="let user">{{ user.full_name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>Username</th>
+        <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="level">
+        <th mat-header-cell *matHeaderCellDef>Level</th>
+        <td mat-cell *matCellDef="let user">
+          {{ user.level.name }}
+          @if (!user.level.is_active) {
+            <span class="status inactive">Level nonaktif</span>
+          }
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let user">
+          <span class="status" [class.inactive]="!user.is_active">
+            {{ user.is_active ? 'Aktif' : 'Nonaktif' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let user" class="actions-cell">
+          <button mat-icon-button type="button" matTooltip="Edit" (click)="openEdit(user)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            type="button"
+            matTooltip="Hapus"
+            [disabled]="user.id === currentUserId()"
+            (click)="remove(user)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+
+    @if (loading()) {
+      <div class="state"><mat-spinner diameter="36" /></div>
+    } @else if (filteredUsers().length === 0) {
+      <div class="state">Tidak ada data user.</div>
+    }
+  </div>
+</mat-card>

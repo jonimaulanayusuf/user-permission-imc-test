@@ -1,0 +1,52 @@
+<div class="login-page">
+  <mat-card class="login-card" appearance="outlined">
+    <div class="login-brand">
+      <div class="brand-logo">IMC</div>
+      <div>
+        <h1>User Access Management</h1>
+        <p>Masuk untuk mengelola user, level, page, dan permission.</p>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Username atau Email</mat-label>
+        <input matInput formControlName="username" autocomplete="username" />
+        @if (form.controls.username.hasError('required')) {
+          <mat-error>Wajib diisi.</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+        />
+        @if (form.controls.password.hasError('required')) {
+          <mat-error>Wajib diisi.</mat-error>
+        }
+      </mat-form-field>
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        class="login-button"
+        [disabled]="loading()"
+      >
+        @if (loading()) {
+          <mat-spinner diameter="18" />
+        } @else {
+          <span>Masuk</span>
+        }
+      </button>
+    </form>
+
+    <div class="login-hint">
+      <strong>Akun demo:</strong> admin / password123
+    </div>
+  </mat-card>
+</div>

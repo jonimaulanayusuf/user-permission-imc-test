@@ -1,0 +1,176 @@
+<div class="page-header">
+  <div>
+    <h1>User Permission</h1>
+    <p>Atur hak akses page berdasarkan level dan override khusus per user.</p>
+  </div>
+</div>
+
+@if (loading()) {
+  <div class="state"><mat-spinner diameter="40" /></div>
+} @else {
+  <mat-card appearance="outlined" class="permission-card">
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Permission per Level">
+        <div class="tab-content">
+          <div class="tab-header">
+            <div>
+              <h2>Matrix Level &amp; Page</h2>
+              <p>Centang page yang boleh diakses oleh level tertentu.</p>
+            </div>
+            <button mat-flat-button color="primary" type="button" [disabled]="saving()" (click)="saveMatrix()">
+              @if (saving()) {
+                <mat-spinner diameter="18" />
+              } @else {
+                Simpan Perubahan
+              }
+            </button>
+          </div>
+
+          <div class="matrix-wrap">
+            <table class="matrix">
+              <thead>
+                <tr>
+                  <th class="page-col">Page</th>
+                  @for (level of levels(); track level.id) {
+                    <th class="center">
+                      <div>{{ level.name }}</div>
+                      <small>{{ level.is_active ? 'Aktif' : 'Nonaktif' }}</small>
+                    </th>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                @for (page of pages(); track page.id) {
+                  <tr>
+                    <td class="page-col">
+                      <div class="page-name">{{ page.name }}</div>
+                      <code class="path">{{ page.path }}</code>
+                      @if (!page.is_active) {
+                        <span class="status inactive">Nonaktif</span>
+                      }
+                    </td>
+                    @for (level of levels(); track level.id) {
+                      <td class="center">
+                        <mat-checkbox
+                          [checked]="isChecked(level.id, page.id)"
+                          (change)="toggle(level.id, page.id, $event.checked)"
+                        />
+                      </td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Override per User">
+        <div class="tab-content">
+          <div class="tab-header user-header">
+            <div>
+              <h2>Override Permission User</h2>
+              <p>Izinkan atau tolak page tertentu khusus untuk user ini.</p>
+            </div>
+            <mat-form-field appearance="outline" class="user-select" subscriptSizing="dynamic">
+              <mat-label>Pilih user</mat-label>
+              <mat-select [value]="selectedUserId()" (valueChange)="selectUser($event)">
+                @for (user of users(); track user.id) {
+                  <mat-option [value]="user.id">
+                    {{ user.full_name }} ({{ user.username }})
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          @if (userLoading()) {
+            <div class="state"><mat-spinner diameter="36" /></div>
+          } @else {
+            @if (userDetail(); as detail) {
+            <div class="user-summary">
+              <strong>{{ detail.user.full_name }}</strong>
+              <span>Level: {{ detail.user.level_name }}</span>
+            </div>
+
+            <div class="matrix-wrap">
+              <table class="matrix">
+                <thead>
+                  <tr>
+                    <th class="page-col">Page</th>
+                    <th class="center">Akses Level</th>
+                    <th class="override-col">Override User</th>
+                    <th class="center">Akses Efektif</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (page of detail.pages; track page.id) {
+                    <tr>
+                      <td class="page-col">
+                        <div class="page-name">{{ page.name }}</div>
+                        <code class="path">{{ page.path }}</code>
+                        @if (!page.is_active) {
+                          <span class="status inactive">Nonaktif</span>
+                        }
+                      </td>
+                      <td class="center">
+                        @if (levelHasPage(page.id)) {
+                          <mat-icon class="yes">check_circle</mat-icon>
+                        } @else {
+                          <mat-icon class="no">cancel</mat-icon>
+                        }
+                      </td>
+                      <td>
+                        <mat-form-field
+                          appearance="outline"
+                          subscriptSizing="dynamic"
+                          class="override-select"
+                        >
+                          <mat-select
+                            [value]="overrideFor(page.id)"
+                            (selectionChange)="setOverride(page.id, $event.value)"
+                          >
+                            <mat-option value="inherit">Ikuti level</mat-option>
+                            <mat-option value="allow">Izinkan</mat-option>
+                            <mat-option value="deny">Tolak</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                      <td class="center">
+                        @if (effectivePage(page.id)) {
+                          <mat-icon class="yes">check_circle</mat-icon>
+                        } @else {
+                          <mat-icon class="no">cancel</mat-icon>
+                        }
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-footer">
+              <span>Perubahan untuk user yang sedang login langsung memperbarui menu.</span>
+              <button
+                mat-flat-button
+                color="primary"
+                type="button"
+                [disabled]="userSaving()"
+                (click)="saveUser()"
+              >
+                @if (userSaving()) {
+                  <mat-spinner diameter="18" />
+                } @else {
+                  Simpan Override
+                }
+              </button>
+            </div>
+            } @else {
+              <div class="state">Pilih user untuk melihat dan mengatur permission.</div>
+            }
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+}

@@ -1,0 +1,61 @@
+<div class="page-header">
+  <div>
+    <h1>Manajemen Page</h1>
+    <p>Kelola halaman dan menu yang tersedia di aplikasi.</p>
+  </div>
+  <button mat-flat-button color="primary" type="button" (click)="openCreate()">
+    <mat-icon>add</mat-icon>
+    Tambah Page
+  </button>
+</div>
+
+<mat-card appearance="outlined">
+  <div class="table-wrap">
+    <table mat-table [dataSource]="pages()" class="data-table">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Nama Page</th>
+        <td mat-cell *matCellDef="let page">{{ page.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="path">
+        <th mat-header-cell *matHeaderCellDef>Path</th>
+        <td mat-cell *matCellDef="let page"><code class="path">{{ page.path }}</code></td>
+      </ng-container>
+
+      <ng-container matColumnDef="sort_order">
+        <th mat-header-cell *matHeaderCellDef>Urutan</th>
+        <td mat-cell *matCellDef="let page">{{ page.sort_order }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let page">
+          <span class="status" [class.inactive]="!page.is_active">
+            {{ page.is_active ? 'Aktif' : 'Nonaktif' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let page" class="actions-cell">
+          <button mat-icon-button type="button" matTooltip="Edit" (click)="openEdit(page)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button type="button" matTooltip="Hapus" (click)="remove(page)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    </table>
+
+    @if (loading()) {
+      <div class="state"><mat-spinner diameter="36" /></div>
+    } @else if (pages().length === 0) {
+      <div class="state">Belum ada data page.</div>
+    }
+  </div>
+</mat-card>

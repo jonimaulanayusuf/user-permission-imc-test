@@ -1,0 +1,77 @@
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(103, 80, 164, 0.16), transparent 42%),
+    radial-gradient(circle at bottom right, rgba(56, 131, 255, 0.12), transparent 38%),
+    var(--mat-sys-surface-container-low, #f6f7fb);
+}
+
+.login-card {
+  width: min(440px, 100%);
+  padding: 28px;
+  border-radius: 20px;
+}
+
+.login-brand {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.brand-logo {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--mat-sys-primary, #6750a4);
+  color: var(--mat-sys-on-primary, #ffffff);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.login-brand h1 {
+  margin: 0 0 4px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.login-brand p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-form mat-form-field {
+  width: 100%;
+}
+
+.login-button {
+  height: 44px;
+  margin-top: 4px;
+}
+
+.login-button mat-spinner {
+  display: inline-block;
+}
+
+.login-hint {
+  margin-top: 20px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--mat-sys-surface-container-high, #ece6f0);
+  font-size: 0.82rem;
+  color: var(--mat-sys-on-surface-variant, #5f6368);
+}

@@ -1,0 +1,11 @@
+mat-card {
+  padding: 0;
+}
+
+td mat-icon {
+  font-size: 20px;
+}
+
+.status + .status {
+  margin-left: 6px;
+}

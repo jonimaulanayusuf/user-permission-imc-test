@@ -1,0 +1,50 @@
+<mat-sidenav-container class="app-shell">
+  <mat-sidenav class="app-sidenav" mode="side" opened>
+    <div class="brand">
+      <div class="brand-logo">IMC</div>
+      <div>
+        <strong>User Access</strong>
+        <small>Management</small>
+      </div>
+    </div>
+
+    <mat-divider />
+
+    <nav class="nav-area">
+      <mat-nav-list>
+        @for (menu of auth.menus(); track menu.id) {
+          <a
+            mat-list-item
+            [routerLink]="menu.path"
+            routerLinkActive="active-nav"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <mat-icon matListItemIcon>{{ iconFor(menu.path) }}</mat-icon>
+            <span matListItemTitle>{{ menu.name }}</span>
+          </a>
+        }
+      </mat-nav-list>
+    </nav>
+
+    <div class="sidenav-footer">
+      <span>Login sebagai</span>
+      <strong>{{ auth.user()?.full_name }}</strong>
+      <small>{{ auth.user()?.level?.name }}</small>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="app-content-wrap">
+    <mat-toolbar class="app-toolbar">
+      <span class="toolbar-title">IMC User Access Management</span>
+      <span class="spacer"></span>
+      <span class="user-chip">{{ auth.user()?.username }}</span>
+      <button mat-icon-button type="button" matTooltip="Logout" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <main class="app-content">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,50 @@
+<div class="page-header">
+  <div>
+    <h1>Dashboard</h1>
+    <p>Selamat datang, {{ auth.user()?.full_name }}.</p>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <mat-card appearance="outlined" class="stat-card">
+    <mat-icon>badge</mat-icon>
+    <div>
+      <span>Level</span>
+      <strong>{{ auth.user()?.level?.name }}</strong>
+    </div>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="stat-card">
+    <mat-icon>public</mat-icon>
+    <div>
+      <span>Halaman dapat diakses</span>
+      <strong>{{ auth.menus().length }}</strong>
+    </div>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="stat-card">
+    <mat-icon>verified_user</mat-icon>
+    <div>
+      <span>Status akun</span>
+      <strong>{{ auth.user()?.is_active ? 'Aktif' : 'Nonaktif' }}</strong>
+    </div>
+  </mat-card>
+</div>
+
+<h2 class="section-title">Menu yang dapat diakses</h2>
+
+<div class="menu-grid">
+  @for (menu of auth.menus(); track menu.id) {
+    <mat-card appearance="outlined" class="menu-card" [routerLink]="menu.path">
+      <mat-icon>{{ iconFor(menu.path) }}</mat-icon>
+      <div>
+        <strong>{{ menu.name }}</strong>
+        <p>{{ menu.description || menu.path }}</p>
+      </div>
+    </mat-card>
+  } @empty {
+    <mat-card appearance="outlined" class="state-card">
+      Belum ada halaman yang dapat diakses. Hubungi administrator.
+    </mat-card>
+  }
+</div>
